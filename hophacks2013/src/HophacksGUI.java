@@ -18,6 +18,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.swing.JOptionPane;
 //import com.sun.java.swing.plaf.*;
 import javax.swing.UIManager;
 /*
@@ -36,6 +37,7 @@ public class HophacksGUI extends javax.swing.JFrame {
 
     private MapManager manager;
     private byte[] fingerprint;
+    private Action action;
     /**
      * Creates new form HophacksGUI
      */
@@ -43,6 +45,7 @@ public class HophacksGUI extends javax.swing.JFrame {
         x = new double[5];
         y = new double[5];
         manager = new MapManager();
+        action = null;
         for (int i = 1; i <= 5; i++) {
             x[i - 1] = i;
             y[i - 1] = (int) (Math.random() * 5);
@@ -72,13 +75,33 @@ public class HophacksGUI extends javax.swing.JFrame {
         recordLabel = new java.awt.Label();
         backButton = new javax.swing.JButton();
         listenButton = new javax.swing.JButton();
-        textField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
+        pickActionLabel = new javax.swing.JLabel();
         testPanel = new javax.swing.JPanel();
         testLabel = new java.awt.Label();
         backButton2 = new javax.swing.JButton();
         recordButton2 = new javax.swing.JButton();
         testResult = new javax.swing.JLabel();
+        actionPicker = new javax.swing.JPanel();
+        actionLabel = new java.awt.Label();
+        backButton3 = new javax.swing.JButton();
+        actionOptions = new javax.swing.JTabbedPane();
+        programTab = new javax.swing.JPanel();
+        tab1Label1 = new javax.swing.JLabel();
+        tab1Text1 = new javax.swing.JTextField();
+        tab1Submit = new javax.swing.JButton();
+        websiteTab = new javax.swing.JPanel();
+        tab2Label1 = new javax.swing.JLabel();
+        tab2Text1 = new javax.swing.JTextField();
+        tab2Submit = new javax.swing.JButton();
+        websiteLogon = new javax.swing.JPanel();
+        tab3Label1 = new javax.swing.JLabel();
+        tab3Text1 = new javax.swing.JTextField();
+        tab3Label2 = new javax.swing.JLabel();
+        tab3Label3 = new javax.swing.JLabel();
+        tab3Text2 = new javax.swing.JTextField();
+        tab3Text3 = new javax.swing.JPasswordField();
+        tab3Submit = new javax.swing.JButton();
 
         jFrame1.getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -200,6 +223,15 @@ public class HophacksGUI extends javax.swing.JFrame {
             }
         });
 
+        pickActionLabel.setText("Pick an action");
+        pickActionLabel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pickActionLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pickActionLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pickActionLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout recordPanelLayout = new javax.swing.GroupLayout(recordPanel);
         recordPanel.setLayout(recordPanelLayout);
         recordPanelLayout.setHorizontalGroup(
@@ -216,7 +248,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(listenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
-                        .addComponent(textField)
+                        .addComponent(pickActionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(submitButton)))
                 .addContainerGap())
@@ -234,12 +266,10 @@ public class HophacksGUI extends javax.swing.JFrame {
                     .addComponent(recordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(recordPanelLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(10, 10, 10)
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pickActionLabel))
                 .addContainerGap())
         );
 
@@ -297,6 +327,170 @@ public class HophacksGUI extends javax.swing.JFrame {
 
         getContentPane().add(testPanel, "testSound");
 
+        actionLabel.setAlignment(java.awt.Label.CENTER);
+        actionLabel.setBackground(new java.awt.Color(102, 102, 255));
+        actionLabel.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
+        actionLabel.setText("Pick An Action");
+
+        backButton3.setText("Back");
+        backButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButton3ActionPerformed(evt);
+            }
+        });
+
+        tab1Label1.setText("Path: ");
+
+        tab1Submit.setText("Submit");
+
+        javax.swing.GroupLayout programTabLayout = new javax.swing.GroupLayout(programTab);
+        programTab.setLayout(programTabLayout);
+        programTabLayout.setHorizontalGroup(
+            programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, programTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(programTabLayout.createSequentialGroup()
+                        .addGap(0, 364, Short.MAX_VALUE)
+                        .addComponent(tab1Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(programTabLayout.createSequentialGroup()
+                        .addComponent(tab1Label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tab1Text1)))
+                .addContainerGap())
+        );
+        programTabLayout.setVerticalGroup(
+            programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(programTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab1Label1)
+                    .addComponent(tab1Text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(tab1Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        actionOptions.addTab("Program", programTab);
+
+        tab2Label1.setText("URL: ");
+
+        tab2Submit.setText("Submit");
+
+        javax.swing.GroupLayout websiteTabLayout = new javax.swing.GroupLayout(websiteTab);
+        websiteTab.setLayout(websiteTabLayout);
+        websiteTabLayout.setHorizontalGroup(
+            websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(websiteTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(websiteTabLayout.createSequentialGroup()
+                        .addComponent(tab2Label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tab2Text1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, websiteTabLayout.createSequentialGroup()
+                        .addGap(0, 364, Short.MAX_VALUE)
+                        .addComponent(tab2Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        websiteTabLayout.setVerticalGroup(
+            websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(websiteTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab2Label1)
+                    .addComponent(tab2Text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(tab2Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        actionOptions.addTab("Website", websiteTab);
+
+        tab3Label1.setText("URL: ");
+
+        tab3Label2.setText("Username: ");
+
+        tab3Label3.setText("Password: ");
+
+        tab3Submit.setText("Submit");
+
+        javax.swing.GroupLayout websiteLogonLayout = new javax.swing.GroupLayout(websiteLogon);
+        websiteLogon.setLayout(websiteLogonLayout);
+        websiteLogonLayout.setHorizontalGroup(
+            websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(websiteLogonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(websiteLogonLayout.createSequentialGroup()
+                        .addComponent(tab3Label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tab3Text1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                    .addGroup(websiteLogonLayout.createSequentialGroup()
+                        .addComponent(tab3Label3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tab3Text3))
+                    .addGroup(websiteLogonLayout.createSequentialGroup()
+                        .addComponent(tab3Label2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tab3Text2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, websiteLogonLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(tab3Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        websiteLogonLayout.setVerticalGroup(
+            websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(websiteLogonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab3Label1)
+                    .addComponent(tab3Text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab3Label2)
+                    .addComponent(tab3Text2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tab3Label3)
+                    .addComponent(tab3Text3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(tab3Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        actionOptions.addTab("Website With Logon", websiteLogon);
+
+        javax.swing.GroupLayout actionPickerLayout = new javax.swing.GroupLayout(actionPicker);
+        actionPicker.setLayout(actionPickerLayout);
+        actionPickerLayout.setHorizontalGroup(
+            actionPickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actionPickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(actionPickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(actionPickerLayout.createSequentialGroup()
+                        .addComponent(backButton3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPickerLayout.createSequentialGroup()
+                        .addGroup(actionPickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(actionOptions, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(actionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14))))
+        );
+        actionPickerLayout.setVerticalGroup(
+            actionPickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actionPickerLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(backButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(actionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(actionOptions)
+                .addContainerGap())
+        );
+
+        getContentPane().add(actionPicker, "action");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -348,7 +542,7 @@ public class HophacksGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
         }
         fingerprint = null;
-        this.textField.setText("");
+        this.pickActionLabel.setText("");
         this.listenButton.setEnabled(false);
         this.submitButton.setEnabled(false);
         this.resetButton.setEnabled(false);
@@ -356,7 +550,11 @@ public class HophacksGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        manager.add(fingerprint, this.textField.getText());
+        if (action == null) {
+            JOptionPane.showMessageDialog(this, "You must select an action");
+            return;
+        }
+        manager.add(fingerprint, this.pickActionLabel.getText());
         backButtonActionPerformed(evt);
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -374,13 +572,24 @@ public class HophacksGUI extends javax.swing.JFrame {
         fingerprint = printMan.extractFingerprint(wave);
         String action = manager.get(fingerprint);
         this.testResult.setText(action);
-        Program.launchProgram(action);
+        Program program = new Program(action);
+        program.launch();
     }//GEN-LAST:event_recordButton2ActionPerformed
 
     private void testMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testMapButtonActionPerformed
         CardLayout cl = (CardLayout) this.getContentPane().getLayout();
         cl.show(this.getContentPane(), "testSound");
     }//GEN-LAST:event_testMapButtonActionPerformed
+
+    private void backButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButton3ActionPerformed
+        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
+        cl.show(this.getContentPane(), "mapSound");
+    }//GEN-LAST:event_backButton3ActionPerformed
+
+    private void pickActionLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pickActionLabelMouseClicked
+        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
+        cl.show(this.getContentPane(), "action");
+    }//GEN-LAST:event_pickActionLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -433,13 +642,19 @@ public class HophacksGUI extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Label actionLabel;
+    private javax.swing.JTabbedPane actionOptions;
+    private javax.swing.JPanel actionPicker;
     private javax.swing.JButton backButton;
     private javax.swing.JButton backButton2;
+    private javax.swing.JButton backButton3;
     private javax.swing.JFrame jFrame1;
     private java.awt.Label label1;
     private javax.swing.JButton listenButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton mapSoundButton;
+    private javax.swing.JLabel pickActionLabel;
+    private javax.swing.JPanel programTab;
     private javax.swing.JButton recordButton;
     private javax.swing.JButton recordButton2;
     private java.awt.Label recordLabel;
@@ -447,10 +662,24 @@ public class HophacksGUI extends javax.swing.JFrame {
     private javax.swing.JButton resetButton;
     private javax.swing.JButton shredButton;
     private javax.swing.JButton submitButton;
+    private javax.swing.JLabel tab1Label1;
+    private javax.swing.JButton tab1Submit;
+    private javax.swing.JTextField tab1Text1;
+    private javax.swing.JLabel tab2Label1;
+    private javax.swing.JButton tab2Submit;
+    private javax.swing.JTextField tab2Text1;
+    private javax.swing.JLabel tab3Label1;
+    private javax.swing.JLabel tab3Label2;
+    private javax.swing.JLabel tab3Label3;
+    private javax.swing.JButton tab3Submit;
+    private javax.swing.JTextField tab3Text1;
+    private javax.swing.JTextField tab3Text2;
+    private javax.swing.JPasswordField tab3Text3;
     private java.awt.Label testLabel;
     private javax.swing.JButton testMapButton;
     private javax.swing.JPanel testPanel;
     private javax.swing.JLabel testResult;
-    private javax.swing.JTextField textField;
+    private javax.swing.JPanel websiteLogon;
+    private javax.swing.JPanel websiteTab;
     // End of variables declaration//GEN-END:variables
 }
