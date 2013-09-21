@@ -9,10 +9,15 @@ import com.musicg.fingerprint.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.sound.sampled.*;
 
 public class SoundTest {
+
+    private static final int THRESHOLD = 10;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         AudioInputStream audioInputStream;
@@ -39,9 +44,30 @@ public class SoundTest {
         final byte[] data = new byte[bufferLengthInBytes];
         int numBytesRead;
         line.start();
-        for (int i : new int[10]) {
+        boolean quiet = true;
+        while (quiet) {
             if ((numBytesRead = line.read(data, 0, bufferLengthInBytes)) == -1) {
                 break;
+            }
+            for (byte b : data) {
+                if (b > THRESHOLD) {
+                    out.write(data, 0, numBytesRead);
+                    quiet = false;
+                    break;
+                }
+            }
+        }
+        int quietFrames = 0;
+        while (quietFrames < 3) {
+            if ((numBytesRead = line.read(data, 0, bufferLengthInBytes)) == -1) {
+                break;
+            }
+            quietFrames++;
+            for (byte b : data) {
+                if (b > THRESHOLD) {
+                    quietFrames--;
+                    break;
+                }
             }
             out.write(data, 0, numBytesRead);
         }
@@ -57,7 +83,7 @@ public class SoundTest {
             ex.printStackTrace();
         }
         // load bytes into the audio input stream for playback  
-        final byte audioBytes[] = out.toByteArray();
+        byte audioBytes[] = out.toByteArray();
         final ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
         audioInputStream = new AudioInputStream(bais, format,
                 audioBytes.length / frameSizeInBytes);
@@ -79,13 +105,28 @@ public class SoundTest {
         header.setAudioFormat(1);
         header.setSubChunk2Id("data");
         header.setSubChunk2Size(audioBytes.length);
-        System.out.println(header);
-        Wave wave2 = new Wave("sound/E 1.wav");
-        System.out.println(wave2.getWaveHeader());
-        Wave wave = new Wave(header, audioBytes);
+        ArrayList<Byte> ab = new ArrayList<Byte>();
+        for (byte b : audioBytes) {
+            ab.add(b);
+        }
+        System.out.println(ab.size());
+        int i = 0;
+        for (Byte b : ab) {
+            if (Math.abs(b) > 10) break;
+            i++;
+        }
+        ab = new ArrayList<Byte>(ab.subList(i, ab.size() - 1));
+        System.out.println(ab.size());
+        Byte[] temp = ab.toArray(new Byte[ab.size()]);
+        byte[] trimmed = new byte[temp.length];
+        i = 0;
+        for (Byte b : temp) {
+            trimmed[i++] = b;
+        }
+        Wave wave = new Wave(header, trimmed);
         WaveFileManager fman = new WaveFileManager(wave);
         fman.saveWaveAsFile("test.wav");
-        for (byte b : wave.getFingerprint()) {
+        for (byte b : wave.getBytes()) {
             //System.out.println(b);
         }
         try {
@@ -96,19 +137,6 @@ public class SoundTest {
             return;
         }
 
-        //MicrophoneRecorder mr = new MicrophoneRecorder(AudioFormatUtil.getDefaultFormat());  
-//        MicrophoneRecorder mr = new MicrophoneRecorder(format);
-//        mr.start();
-//        Thread.sleep(2000);
-//        mr.stop();
-//        Thread.sleep(1000);
-//        AudioInputStream stream = mr.getAudioInputStream();
-//        byte[] bytes = new byte[stream.available()];
-//        stream.read(bytes);
-//        for (byte b : bytes) {
-//            System.out.println(b);
-//        }
-        //wd.saveToFile("~tmp", Type.WAVE, mr.getAudioInputStream()); 
     }
 //        String filename = "sound/low E 1.wav";
 //
