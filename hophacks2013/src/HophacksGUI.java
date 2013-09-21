@@ -617,7 +617,7 @@ public class HophacksGUI extends javax.swing.JFrame {
 
     private void tab3SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab3SubmitActionPerformed
         String url = this.tab3Text1.getText();
-        String user = this.tab3Text1.getText();
+        String user = this.tab3Text2.getText();
         String pass = new String(this.tab3Text3.getPassword());
         action = new WebpageLogin(url, user, pass);
         this.pickActionLabel.setText("Webpage login: " + url);

@@ -23,9 +23,13 @@ public class MapManager {
         Action best = null;
         for (byte[] print : database.keySet()) {
             double ratio = ((double) fingerprint.length)/((double) print.length);
-            if (ratio > 1.25 || ratio < 0.75) continue;
+            if (ratio > 1.25 || ratio < 0.75) {
+                System.out.println("Mismatched lengths");
+                continue;
+            }
             fsc = new FingerprintSimilarityComputer(fingerprint, print);
             float score = fsc.getFingerprintsSimilarity().getSimilarity();
+            System.out.println("Score: " + score);
             if (score > THRESHOLD) best = database.get(print);
         }
         return best;
