@@ -2,17 +2,22 @@
 import com.musicg.fingerprint.FingerprintManager;
 import com.musicg.wave.Wave;
 import com.musicg.wave.WaveFileManager;
+import java.awt.AWTException;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import org.math.plot.Plot2DPanel;
 import java.awt.Color;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -650,6 +655,13 @@ public class HophacksGUI extends javax.swing.JFrame {
 //        frame.setSize(new Dimension(500,500));
 //        frame.setContentPane(plot);
 //        frame.setVisible(true);
+        TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/trayIcon.png").getScaledInstance(16, 16, 0));
+        System.out.println(trayIcon.getImage());
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException ex) {
+        }
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 System.out.println(info.getName());

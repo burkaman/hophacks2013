@@ -23,7 +23,7 @@ public class MapManager {
         Action best = null;
         for (byte[] print : database.keySet()) {
             double ratio = ((double) fingerprint.length)/((double) print.length);
-            if (ratio > 2 || ratio < 0.5) continue;
+            if (ratio > 1.25 || ratio < 0.75) continue;
             fsc = new FingerprintSimilarityComputer(fingerprint, print);
             float score = fsc.getFingerprintsSimilarity().getSimilarity();
             if (score > THRESHOLD) best = database.get(print);
