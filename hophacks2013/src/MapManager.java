@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class MapManager implements Serializable {
 
     private HashMap<Sound, Action> database;
-    private static final float THRESHOLD = 0.7f;
+    private static final float THRESHOLD = 0.5f;
 
     public MapManager() {
         try {
@@ -54,9 +54,9 @@ public class MapManager implements Serializable {
             }
             fsc = new FingerprintSimilarityComputer(fingerprint, print);
             float score = fsc.getFingerprintsSimilarity().getSimilarity();
+            System.out.println(sound.getName());
             System.out.println("Score: " + score);
             if (score > THRESHOLD) {
-                System.out.println("here");
                 best = find(print);
             }
         }
