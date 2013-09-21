@@ -1,3 +1,8 @@
+
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import org.math.plot.Plot2DPanel;
+import java.awt.Color;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -8,11 +13,19 @@
  * @author burkaman
  */
 public class HophacksGUI extends javax.swing.JFrame {
-
+    private double x[];
+    private double y[];
     /**
      * Creates new form HophacksGUI
      */
     public HophacksGUI() {
+        x = new double[5];
+        y = new double[5];
+        for( int i = 1; i <= 5; i++) {
+            x[i-1] = i;
+            y[i-1] = (int)(Math.random()*5);
+        }
+        
         initComponents();
     }
 
@@ -25,50 +38,76 @@ public class HophacksGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
         label1 = new java.awt.Label();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        plot2DCanvas2 = new org.math.plot.canvas.Plot2DCanvas();
+        double x[] = {1,2,3,4,5};
+        double y[] = {1,2,3,4,5};
+        plot2DCanvas2.addLinePlot("my plot",Color.GREEN,x,y);
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 102));
 
+        label1.setAlignment(java.awt.Label.CENTER);
         label1.setBackground(new java.awt.Color(0, 102, 102));
         label1.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 36)); // NOI18N
-        label1.setSize(new java.awt.Dimension(84, 40));
         label1.setText("HopHacks 2013");
 
         jButton1.setText("Map Sound");
 
         jButton2.setText("Test Mapping");
 
+        javax.swing.GroupLayout plot2DCanvas2Layout = new javax.swing.GroupLayout(plot2DCanvas2);
+        plot2DCanvas2.setLayout(plot2DCanvas2Layout);
+        plot2DCanvas2Layout.setHorizontalGroup(
+            plot2DCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        plot2DCanvas2Layout.setVerticalGroup(
+            plot2DCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(119, 119, 119))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(138, 138, 138))
+            .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(plot2DCanvas2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(plot2DCanvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,6 +122,16 @@ public class HophacksGUI extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+//        double x[] = {1,2,3,4,5};
+//        double y[] = {1,2,3,4,5};
+//        
+//        Plot2DPanel plot = new Plot2DPanel();
+//        plot.addLinePlot("my plot",x,y);
+//        jpanel1.getContentPane(plot);
+//        JFrame frame = new JFrame ("a plot panel");
+//        frame.setSize(new Dimension(500,500));
+//        frame.setContentPane(plot);
+//        frame.setVisible(true);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -102,15 +151,22 @@ public class HophacksGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new HophacksGUI().setVisible(true);
+                
             }
         });
+        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JFrame jFrame1;
     private java.awt.Label label1;
+    private org.math.plot.canvas.Plot2DCanvas plot2DCanvas2;
     // End of variables declaration//GEN-END:variables
 }
