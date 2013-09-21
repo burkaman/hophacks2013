@@ -3,7 +3,7 @@ import com.musicg.math.rank.ArrayRankDouble;
 import com.musicg.math.statistics.SpectralCentroid;
 import com.musicg.math.statistics.StandardDeviation;
 import com.musicg.pitch.PitchHandler;
-import com.musicg.wave.Wave;
+import com.musicg.wave.*;
 import com.musicg.wave.extension.Spectrogram;
 import com.musicg.fingerprint.*;
 import java.io.ByteArrayInputStream;
@@ -16,7 +16,7 @@ public class SoundTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         AudioInputStream audioInputStream;
-        AudioFormat format = new AudioFormat(48000.0f, 16, 2, true, true);
+        AudioFormat format = new AudioFormat(44100.0f, 16, 2, true, false);
         TargetDataLine line;
         double duration;
 
@@ -39,16 +39,11 @@ public class SoundTest {
         final byte[] data = new byte[bufferLengthInBytes];
         int numBytesRead;
         line.start();
-        while (true) {
+        for (int i : new int[10]) {
             if ((numBytesRead = line.read(data, 0, bufferLengthInBytes)) == -1) {
                 break;
             }
-            int sum = 0;
-            for (byte b : data) {
-                sum += b;
-            }
-            System.out.println(sum);
-            //out.write(data, 0, numBytesRead);
+            out.write(data, 0, numBytesRead);
         }
         // we reached the end of the stream. stop and close the line.  
         line.stop();
@@ -70,6 +65,29 @@ public class SoundTest {
                 * 1000) / format.getFrameRate());
         duration = milliseconds / 1000.0;
         System.out.println(duration);
+        WaveHeader header = new WaveHeader();
+        header.setBitsPerSample(16);
+        header.setChannels(2);
+        header.setSampleRate(44100);
+        header.setByteRate(176400);
+        header.setBlockAlign(4);
+        header.setChunkId("RIFF");
+        header.setChunkSize(audioBytes.length);
+        header.setFormat("WAVE");
+        header.setSubChunk1Id("fmt");
+        header.setSubChunk1Size(16);
+        header.setAudioFormat(1);
+        header.setSubChunk2Id("data");
+        header.setSubChunk2Size(audioBytes.length);
+        System.out.println(header);
+        Wave wave2 = new Wave("sound/E 1.wav");
+        System.out.println(wave2.getWaveHeader());
+        Wave wave = new Wave(header, audioBytes);
+        WaveFileManager fman = new WaveFileManager(wave);
+        fman.saveWaveAsFile("test.wav");
+        for (byte b : wave.getFingerprint()) {
+            //System.out.println(b);
+        }
         try {
             audioInputStream.reset();
             System.out.println("resetting...");
@@ -79,17 +97,17 @@ public class SoundTest {
         }
 
         //MicrophoneRecorder mr = new MicrophoneRecorder(AudioFormatUtil.getDefaultFormat());  
-        MicrophoneRecorder mr = new MicrophoneRecorder(format);
-        mr.start();
-        Thread.sleep(2000);
-        mr.stop();
-        Thread.sleep(1000);
-        AudioInputStream stream = mr.getAudioInputStream();
-        byte[] bytes = new byte[stream.available()];
-        stream.read(bytes);
-        for (byte b : bytes) {
-            System.out.println(b);
-        }
+//        MicrophoneRecorder mr = new MicrophoneRecorder(format);
+//        mr.start();
+//        Thread.sleep(2000);
+//        mr.stop();
+//        Thread.sleep(1000);
+//        AudioInputStream stream = mr.getAudioInputStream();
+//        byte[] bytes = new byte[stream.available()];
+//        stream.read(bytes);
+//        for (byte b : bytes) {
+//            System.out.println(b);
+//        }
         //wd.saveToFile("~tmp", Type.WAVE, mr.getAudioInputStream()); 
     }
 //        String filename = "sound/low E 1.wav";
