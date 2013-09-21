@@ -20,7 +20,7 @@ public class BrowserOperations {
         
         try {
         runtime = Runtime.getRuntime();
-        process = runtime.exec("open /Applications/Firefox.app");
+        process = runtime.exec("C:/Program Files (x86)/Mozilla Firefox/firefox.exe");
         } catch (IOException e) {
             System.err.println(e);
         }

@@ -374,6 +374,7 @@ public class HophacksGUI extends javax.swing.JFrame {
         fingerprint = printMan.extractFingerprint(wave);
         String action = manager.get(fingerprint);
         this.testResult.setText(action);
+        Program.launchProgram(action);
     }//GEN-LAST:event_recordButton2ActionPerformed
 
     private void testMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testMapButtonActionPerformed
