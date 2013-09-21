@@ -99,7 +99,7 @@
     </Component>
     <Container class="org.math.plot.canvas.Plot2DCanvas" name="plot2DCanvas2">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="double x[] = {1,2,3,4,5};&#xd;&#xa;double y[] = {1,2,3,4,5};&#xd;&#xa;plot2DCanvas2.addLinePlot(&quot;my plot&quot;,Color.GREEN,x,y);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="//double x[] = {1,2,3,4,5};&#xd;&#xa;//double y[] = {1,2,3,4,5};&#xd;&#xa;plot2DCanvas2.addLinePlot(&quot;my plot&quot;,Color.GREEN,x,y);"/>
       </AuxValues>
 
       <Layout>
