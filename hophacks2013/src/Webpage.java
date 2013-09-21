@@ -18,7 +18,7 @@ public class Webpage implements Action {
     }
 
     public void launch() {
-        WebDriver driver = new FirefoxDriver();
-        driver.get(url);
+        Program program = new Program("C:/Program Files (x86)/Mozilla Firefox/firefox.exe " + url);
+        program.launch();
     }
 }

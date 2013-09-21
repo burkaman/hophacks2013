@@ -582,6 +582,7 @@ public class HophacksGUI extends javax.swing.JFrame {
             this.testResult.setText("No match found");
             return;
         }
+        this.testResult.setText(("Success"));
         action.launch();
     }//GEN-LAST:event_recordButton2ActionPerformed
 
@@ -643,7 +644,6 @@ public class HophacksGUI extends javax.swing.JFrame {
 //        frame.setContentPane(plot);
 //        frame.setVisible(true);
         TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/trayIcon.png").getScaledInstance(16, 16, 0));
-        System.out.println(trayIcon.getImage());
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(trayIcon);
