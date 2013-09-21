@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class MapManager {
 
     private HashMap<byte[],Action> database;
-    private float THRESHOLD = 0.7f;
+    private float THRESHOLD = 0.4f;
 
     public MapManager() {
         database = new HashMap<byte[],Action>();
