@@ -6,6 +6,8 @@ import com.musicg.pitch.PitchHandler;
 import com.musicg.wave.Wave;
 import com.musicg.wave.extension.Spectrogram;
 import com.musicg.fingerprint.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.*;
@@ -13,21 +15,82 @@ import javax.sound.sampled.*;
 public class SoundTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        AudioInputStream audioInputStream;
+        AudioFormat format = new AudioFormat(48000.0f, 16, 2, true, true);
+        TargetDataLine line;
+        double duration;
 
-     //MicrophoneRecorder mr = new MicrophoneRecorder(AudioFormatUtil.getDefaultFormat());  
-     AudioFormat format = new AudioFormat(48000.0f, 16, 2, true, true);
-     MicrophoneRecorder mr = new MicrophoneRecorder(format); 
-     mr.start();  
-     Thread.sleep(2000);  
-     mr.stop();  
-     Thread.sleep(3000);  
-     AudioInputStream stream = mr.getAudioInputStream();
-     byte[] bytes = new byte[1000000];
-     stream.read(bytes);
-     for (byte b : bytes) {
-         System.out.println(b);
-     }
-     //wd.saveToFile("~tmp", Type.WAVE, mr.getAudioInputStream()); 
+        duration = 0;
+        final DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+        if (!AudioSystem.isLineSupported(info)) {
+            line = null;
+        }
+        // get and open the target data line for capture.  
+        try {
+            line = (TargetDataLine) AudioSystem.getLine(info);
+            line.open(format, line.getBufferSize());
+        } catch (final Exception ex) {
+            line = null;
+        }
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final int frameSizeInBytes = format.getFrameSize();
+        final int bufferLengthInFrames = line.getBufferSize() / 8;
+        final int bufferLengthInBytes = bufferLengthInFrames * frameSizeInBytes;
+        final byte[] data = new byte[bufferLengthInBytes];
+        int numBytesRead;
+        line.start();
+        while (true) {
+            if ((numBytesRead = line.read(data, 0, bufferLengthInBytes)) == -1) {
+                break;
+            }
+            int sum = 0;
+            for (byte b : data) {
+                sum += b;
+            }
+            System.out.println(sum);
+            //out.write(data, 0, numBytesRead);
+        }
+        // we reached the end of the stream. stop and close the line.  
+        line.stop();
+        line.close();
+        line = null;
+        // stop and close the output stream  
+        try {
+            out.flush();
+            out.close();
+        } catch (final IOException ex) {
+            ex.printStackTrace();
+        }
+        // load bytes into the audio input stream for playback  
+        final byte audioBytes[] = out.toByteArray();
+        final ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
+        audioInputStream = new AudioInputStream(bais, format,
+                audioBytes.length / frameSizeInBytes);
+        final long milliseconds = (long) ((audioInputStream.getFrameLength()
+                * 1000) / format.getFrameRate());
+        duration = milliseconds / 1000.0;
+        System.out.println(duration);
+        try {
+            audioInputStream.reset();
+            System.out.println("resetting...");
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+
+        //MicrophoneRecorder mr = new MicrophoneRecorder(AudioFormatUtil.getDefaultFormat());  
+        MicrophoneRecorder mr = new MicrophoneRecorder(format);
+        mr.start();
+        Thread.sleep(2000);
+        mr.stop();
+        Thread.sleep(1000);
+        AudioInputStream stream = mr.getAudioInputStream();
+        byte[] bytes = new byte[stream.available()];
+        stream.read(bytes);
+        for (byte b : bytes) {
+            System.out.println(b);
+        }
+        //wd.saveToFile("~tmp", Type.WAVE, mr.getAudioInputStream()); 
     }
 //        String filename = "sound/low E 1.wav";
 //
