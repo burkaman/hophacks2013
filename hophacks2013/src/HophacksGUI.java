@@ -387,14 +387,14 @@ public class HophacksGUI extends javax.swing.JFrame {
         websiteTabLayout.setHorizontalGroup(
             websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(websiteTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(websiteTabLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(tab2Label1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tab2Text1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, websiteTabLayout.createSequentialGroup()
-                        .addGap(0, 364, Short.MAX_VALUE)
+                    .addGroup(websiteTabLayout.createSequentialGroup()
+                        .addGap(143, 376, Short.MAX_VALUE)
                         .addComponent(tab2Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -646,7 +646,7 @@ public class HophacksGUI extends javax.swing.JFrame {
 //        frame.setSize(new Dimension(500,500));
 //        frame.setContentPane(plot);
 //        frame.setVisible(true);
-        TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/trayIcon.png").getScaledInstance(16, 16, 0));
+        TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/hacklogo.png").getScaledInstance(16, 16, 0));
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(trayIcon);
