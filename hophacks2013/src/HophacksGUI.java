@@ -8,6 +8,7 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.io.File;
+import java.util.Date;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -560,7 +561,9 @@ public class HophacksGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "You must select an action");
             return;
         }
-        manager.add(fingerprint, action);
+        String name = JOptionPane.showInputDialog(this, "What is the name of this sound?");
+        Sound sound = new Sound(fingerprint, name, new Date());
+        manager.add(sound, action);
         this.pickActionLabel.setText("Pick an action");
         action = null;
         backButtonActionPerformed(evt);

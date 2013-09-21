@@ -1,15 +1,10 @@
-
-import java.io.IOException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import java.io.Serializable;
 
 /**
  *
  * @author Julia
  */
-public class Webpage implements Action {
+public class Webpage implements Action, Serializable {
 
     private String url;
 
