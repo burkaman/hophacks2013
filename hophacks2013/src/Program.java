@@ -1,11 +1,11 @@
-
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  *
  * @author burkaman
  */
-public class Program implements Action {
+public class Program implements Action, Serializable {
 
     private String path;
 
