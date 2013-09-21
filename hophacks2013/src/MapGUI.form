@@ -70,6 +70,7 @@
     </Component>
     <Component class="java.awt.Label" name="label1">
       <Properties>
+        <Property name="alignment" type="int" value="1"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="66" red="66" type="rgb"/>
         </Property>

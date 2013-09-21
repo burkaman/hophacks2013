@@ -37,6 +37,7 @@ public class MapGUI extends javax.swing.JFrame {
         jButton2.setText("Reset");
         jButton2.setEnabled(false);
 
+        label1.setAlignment(java.awt.Label.CENTER);
         label1.setBackground(new java.awt.Color(102, 102, 255));
         label1.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         label1.setText("Record Your Sound");
