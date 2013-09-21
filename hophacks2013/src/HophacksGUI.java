@@ -43,8 +43,8 @@ public class HophacksGUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         plot2DCanvas2 = new org.math.plot.canvas.Plot2DCanvas();
-        double x[] = {1,2,3,4,5};
-        double y[] = {1,2,3,4,5};
+        //double x[] = {1,2,3,4,5};
+        //double y[] = {1,2,3,4,5};
         plot2DCanvas2.addLinePlot("my plot",Color.GREEN,x,y);
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
