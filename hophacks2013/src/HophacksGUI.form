@@ -469,6 +469,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Submit"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tab1SubmitActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -528,6 +531,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Submit"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tab2SubmitActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -621,6 +627,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Submit"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tab3SubmitActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

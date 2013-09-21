@@ -342,6 +342,11 @@ public class HophacksGUI extends javax.swing.JFrame {
         tab1Label1.setText("Path: ");
 
         tab1Submit.setText("Submit");
+        tab1Submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab1SubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout programTabLayout = new javax.swing.GroupLayout(programTab);
         programTab.setLayout(programTabLayout);
@@ -376,6 +381,11 @@ public class HophacksGUI extends javax.swing.JFrame {
         tab2Label1.setText("URL: ");
 
         tab2Submit.setText("Submit");
+        tab2Submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab2SubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout websiteTabLayout = new javax.swing.GroupLayout(websiteTab);
         websiteTab.setLayout(websiteTabLayout);
@@ -414,6 +424,11 @@ public class HophacksGUI extends javax.swing.JFrame {
         tab3Label3.setText("Password: ");
 
         tab3Submit.setText("Submit");
+        tab3Submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tab3SubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout websiteLogonLayout = new javax.swing.GroupLayout(websiteLogon);
         websiteLogon.setLayout(websiteLogonLayout);
@@ -542,7 +557,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
         }
         fingerprint = null;
-        this.pickActionLabel.setText("");
         this.listenButton.setEnabled(false);
         this.submitButton.setEnabled(false);
         this.resetButton.setEnabled(false);
@@ -554,7 +568,9 @@ public class HophacksGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "You must select an action");
             return;
         }
-        manager.add(fingerprint, this.pickActionLabel.getText());
+        manager.add(fingerprint, action);
+        this.pickActionLabel.setText("Pick an action");
+        action = null;
         backButtonActionPerformed(evt);
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -565,15 +581,16 @@ public class HophacksGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_backButton2ActionPerformed
 
     private void recordButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordButton2ActionPerformed
-        this.testResult.setText("");
         MicrophoneRecorder mr = new MicrophoneRecorder();
         Wave wave = mr.record();
         FingerprintManager printMan = new FingerprintManager();
         fingerprint = printMan.extractFingerprint(wave);
-        String action = manager.get(fingerprint);
-        this.testResult.setText(action);
-        Program program = new Program(action);
-        program.launch();
+        action = manager.get(fingerprint);
+        if (action == null) {
+            this.testResult.setText("No match found");
+            return;
+        }
+        action.launch();
     }//GEN-LAST:event_recordButton2ActionPerformed
 
     private void testMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testMapButtonActionPerformed
@@ -590,6 +607,29 @@ public class HophacksGUI extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) this.getContentPane().getLayout();
         cl.show(this.getContentPane(), "action");
     }//GEN-LAST:event_pickActionLabelMouseClicked
+
+    private void tab1SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab1SubmitActionPerformed
+        String path = this.tab1Text1.getText();
+        action = new Program(path);
+        this.pickActionLabel.setText("Program: " + path);
+        backButton3ActionPerformed(evt);
+    }//GEN-LAST:event_tab1SubmitActionPerformed
+
+    private void tab2SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab2SubmitActionPerformed
+        String url = this.tab2Text1.getText();
+        action = new Webpage(url);
+        this.pickActionLabel.setText("Webpage: " + url);
+        backButton3ActionPerformed(evt);
+    }//GEN-LAST:event_tab2SubmitActionPerformed
+
+    private void tab3SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab3SubmitActionPerformed
+        String url = this.tab3Text1.getText();
+        String user = this.tab3Text1.getText();
+        String pass = new String(this.tab3Text3.getPassword());
+        action = new WebpageLogin(url, user, pass);
+        this.pickActionLabel.setText("Webpage login: " + url);
+        backButton3ActionPerformed(evt);
+    }//GEN-LAST:event_tab3SubmitActionPerformed
 
     /**
      * @param args the command line arguments
