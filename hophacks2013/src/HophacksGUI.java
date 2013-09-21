@@ -4,20 +4,10 @@ import com.musicg.wave.Wave;
 import com.musicg.wave.WaveFileManager;
 import java.awt.AWTException;
 import java.awt.CardLayout;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import org.math.plot.Plot2DPanel;
-import java.awt.Color;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -25,7 +15,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.swing.JOptionPane;
 //import com.sun.java.swing.plaf.*;
-import javax.swing.UIManager;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -557,10 +546,8 @@ public class HophacksGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_listenButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        try {
-            Files.delete(FileSystems.getDefault().getPath("temp.wav"));
-        } catch (IOException ex) {
-        }
+        File file = new File("temp.wav");
+        file.delete();
         fingerprint = null;
         this.listenButton.setEnabled(false);
         this.submitButton.setEnabled(false);
