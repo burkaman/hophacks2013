@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import org.math.plot.Plot2DPanel;
 import java.awt.Color;
+//import com.sun.java.swing.plaf.*;
+import javax.swing.UIManager;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -42,10 +44,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        plot2DCanvas2 = new org.math.plot.canvas.Plot2DCanvas();
-        //double x[] = {1,2,3,4,5};
-        //double y[] = {1,2,3,4,5};
-        plot2DCanvas2.addLinePlot("my plot",Color.GREEN,x,y);
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -70,17 +68,6 @@ public class HophacksGUI extends javax.swing.JFrame {
 
         jButton2.setText("Test Mapping");
 
-        javax.swing.GroupLayout plot2DCanvas2Layout = new javax.swing.GroupLayout(plot2DCanvas2);
-        plot2DCanvas2.setLayout(plot2DCanvas2Layout);
-        plot2DCanvas2Layout.setHorizontalGroup(
-            plot2DCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        plot2DCanvas2Layout.setVerticalGroup(
-            plot2DCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,10 +79,6 @@ public class HophacksGUI extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(138, 138, 138))
             .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(plot2DCanvas2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,9 +88,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(plot2DCanvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,11 +115,13 @@ public class HophacksGUI extends javax.swing.JFrame {
 //        frame.setVisible(true);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                System.out.println(info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
+UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(HophacksGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -167,6 +150,5 @@ public class HophacksGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JFrame jFrame1;
     private java.awt.Label label1;
-    private org.math.plot.canvas.Plot2DCanvas plot2DCanvas2;
     // End of variables declaration//GEN-END:variables
 }
