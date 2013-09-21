@@ -13,13 +13,8 @@ import java.util.HashMap;
  */
 public class MapManager implements Serializable {
 
-<<<<<<< HEAD
-    private HashMap<byte[],Action> database;
-    private float THRESHOLD = 0.4f;
-=======
     private HashMap<Sound, Action> database;
     private static final float THRESHOLD = 0.7f;
->>>>>>> 9e80d9f3112511d6f3383ac6ebe17b5369a5e799
 
     public MapManager() {
         try {
