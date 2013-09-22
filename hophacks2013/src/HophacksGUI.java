@@ -4,6 +4,7 @@ import com.musicg.wave.Wave;
 import com.musicg.wave.WaveFileManager;
 import java.awt.AWTException;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
@@ -725,6 +726,10 @@ public class HophacksGUI extends javax.swing.JFrame {
                     System.out.println("In thread");
                     int i = 0;
                     while(running) {
+                        if(jComboBox1.getSelectedIndex()==4) {
+                             recordLabel.setBackground(new Color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
+                             
+                        }
                         channel.noteOn(note,127);
                         i++;
                         System.out.println("In while loop " +i);
@@ -748,6 +753,7 @@ public class HophacksGUI extends javax.swing.JFrame {
 
                 }
             },"Metronome");
+            recordLabel.setBackground(new Color(102,102,255));
             thread.setPriority(Thread.MAX_PRIORITY);
             thread.start();
 
