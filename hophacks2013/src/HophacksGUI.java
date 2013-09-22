@@ -42,10 +42,12 @@ public class HophacksGUI extends javax.swing.JFrame {
     private Thread thread;
     private boolean running;
     private int note;
+    private int i;
     /**
      * Creates new form HophacksGUI
      */
     public HophacksGUI() {
+        i = 0;
         TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/hacklogo.png"));
         trayIcon.setImageAutoSize(true);
         SystemTray tray = SystemTray.getSystemTray();
@@ -95,6 +97,7 @@ public class HophacksGUI extends javax.swing.JFrame {
         browseButton = new javax.swing.JButton();
         recordPanel = new javax.swing.JPanel();
         recordButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
         resetButton = new javax.swing.JButton();
         recordLabel = new java.awt.Label();
         backButton = new javax.swing.JButton();
@@ -105,7 +108,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         jSlider2 = new javax.swing.JSlider();
         label2 = new java.awt.Label();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox();
         testPanel = new javax.swing.JPanel();
         testLabel = new java.awt.Label();
         backButton2 = new javax.swing.JButton();
@@ -220,6 +222,13 @@ public class HophacksGUI extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cowbell", "Silence", "High Wood Block", "Low Wood Block", "WILD CARD" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         resetButton.setText("Reset");
         resetButton.setEnabled(false);
         resetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -293,13 +302,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         label2.setAlignment(java.awt.Label.RIGHT);
         label2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         label2.setText("50 BPM");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cowbell", "Silence", "High Wood Block", "Low Wood Block", "WILD CARD" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout recordPanelLayout = new javax.swing.GroupLayout(recordPanel);
         recordPanel.setLayout(recordPanelLayout);
@@ -582,7 +584,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPickerLayout.createSequentialGroup()
                         .addGroup(actionPickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(actionOptions, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+                            .addComponent(actionOptions, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(actionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(14, 14, 14))))
         );
@@ -594,7 +596,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(actionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(actionOptions, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(actionOptions)
                 .addContainerGap())
         );
 
@@ -806,6 +808,7 @@ public class HophacksGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_listenButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        running = false;
         resetButtonActionPerformed(evt);
         CardLayout cl = (CardLayout) this.getContentPane().getLayout();
         cl.show(this.getContentPane(), "main");
