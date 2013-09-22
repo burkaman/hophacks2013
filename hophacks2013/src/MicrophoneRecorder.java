@@ -30,6 +30,12 @@ public class MicrophoneRecorder {
     public MicrophoneRecorder() {
     }
 
+    public void stop() {
+        line.stop();
+        line.close();
+        line = null;
+    }
+
     public Wave record() {
         format = new AudioFormat(44100.0f, 16, 2, true, false);
 

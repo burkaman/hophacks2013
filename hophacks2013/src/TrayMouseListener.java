@@ -1,4 +1,5 @@
 
+import com.musicg.wave.Wave;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
@@ -9,21 +10,35 @@ import javax.swing.JFrame;
  */
 public class TrayMouseListener implements MouseListener {
 
-    private JFrame frame;
-    private BackgroundMicrophone mic;
+    private HophacksGUI frame;
+    private Thread thread;
+    private boolean forever;
 
-    public TrayMouseListener(JFrame frame) {
+    public TrayMouseListener(HophacksGUI frame) {
         this.frame = frame;
-        mic = new BackgroundMicrophone();
+        forever = true;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (frame.isVisible()) {
             frame.setVisible(false);
-            mic.start();
+            forever = true;
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    MicrophoneRecorder mr = new MicrophoneRecorder();
+                    while (forever) {
+                        Wave wave = mr.record();
+                        frame.playAction();
+                    }
+                }
+            });
+            thread.start();
+        } else {
+            forever = false;
+            frame.setVisible(true);
         }
-        frame.setVisible(!frame.isVisible());
     }
 
     @Override

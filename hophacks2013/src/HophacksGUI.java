@@ -749,6 +749,10 @@ public class HophacksGUI extends javax.swing.JFrame {
         running = false;
     }//GEN-LAST:event_backButton2ActionPerformed
 
+    public void playAction() {
+        recordButton2ActionPerformed(new java.awt.event.ActionEvent(new Object(), 2, "2"));
+    }
+
     private void recordButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordButton2ActionPerformed
         MicrophoneRecorder mr = new MicrophoneRecorder();
         Wave wave = mr.record();
