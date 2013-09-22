@@ -730,7 +730,8 @@ public class HophacksGUI extends javax.swing.JFrame {
                     while(running) {
                         if(jComboBox1.getSelectedIndex()==4) {
                              recordLabel.setBackground(new Color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
-                             
+                             note = (int)(Math.random()*40)+40;
+ 
                         }
                         channel.noteOn(note,127);
                         i++;
