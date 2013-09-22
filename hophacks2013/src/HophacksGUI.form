@@ -52,7 +52,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="testMapButton" pref="234" max="32767" attributes="0"/>
-                      <Component id="jButton1" max="32767" attributes="0"/>
+                      <Component id="browseButton" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="101" max="32767" attributes="0"/>
               </Group>
@@ -68,7 +68,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="193" max="32767" attributes="0"/>
+                  <EmptySpace pref="192" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="mapSoundButton" alignment="3" min="-2" pref="78" max="-2" attributes="0"/>
                       <Component id="testMapButton" alignment="3" min="-2" pref="78" max="-2" attributes="0"/>
@@ -76,7 +76,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="shredButton" pref="90" max="32767" attributes="0"/>
-                      <Component id="jButton1" max="32767" attributes="0"/>
+                      <Component id="browseButton" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
@@ -124,12 +124,12 @@
             <Property name="text" type="java.lang.String" value="Shred"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="browseButton">
           <Properties>
             <Property name="label" type="java.lang.String" value="Browse"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="browseButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -146,7 +146,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jToggleButton1" max="32767" attributes="0"/>
+                      <Component id="jToggleButton1" pref="135" max="32767" attributes="0"/>
                       <Component id="jSlider2" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="label2" min="-2" pref="82" max="-2" attributes="0"/>
@@ -180,7 +180,7 @@
                               <Component id="recordLabel" min="-2" pref="505" max="-2" attributes="0"/>
                               <Component id="jComboBox1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -191,7 +191,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jComboBox1" alignment="0" pref="27" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jToggleButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="backButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -201,7 +201,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="recordLabel" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                          <EmptySpace pref="21" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="resetButton" pref="73" max="32767" attributes="0"/>
                               <Component id="recordButton" max="32767" attributes="0"/>
@@ -373,7 +373,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="testLabel" alignment="0" pref="649" max="32767" attributes="0"/>
+                      <Component id="testLabel" alignment="0" pref="645" max="32767" attributes="0"/>
                       <Component id="recordButton2" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="backButton2" min="-2" max="-2" attributes="0"/>
@@ -393,7 +393,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="testLabel" min="-2" pref="110" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="recordButton2" pref="148" max="32767" attributes="0"/>
+                  <Component id="recordButton2" pref="138" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="testResult" min="-2" pref="82" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -520,7 +520,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="501" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="503" max="32767" attributes="0"/>
                                   <Component id="tab1Submit" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -541,7 +541,7 @@
                               <Component id="tab1Label1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tab1Text1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="163" max="32767" attributes="0"/>
+                          <EmptySpace pref="164" max="32767" attributes="0"/>
                           <Component id="tab1Submit" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -587,7 +587,7 @@
                                   <Component id="tab2Text1" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="143" pref="507" max="32767" attributes="0"/>
+                                  <EmptySpace min="143" pref="515" max="32767" attributes="0"/>
                                   <Component id="tab2Submit" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -603,7 +603,7 @@
                               <Component id="tab2Label1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tab2Text1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="163" max="32767" attributes="0"/>
+                          <EmptySpace pref="164" max="32767" attributes="0"/>
                           <Component id="tab2Submit" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -659,7 +659,7 @@
                                   <Component id="tab3Text2" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="501" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="503" max="32767" attributes="0"/>
                                   <Component id="tab3Submit" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -685,7 +685,7 @@
                               <Component id="tab3Label3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tab3Text3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="95" max="32767" attributes="0"/>
+                          <EmptySpace pref="106" max="32767" attributes="0"/>
                           <Component id="tab3Submit" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -793,7 +793,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="jList1">
+            <Component class="javax.swing.JList" name="soundList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="5">
@@ -804,6 +804,7 @@
                     <StringItem index="4" value="Item 5"/>
                   </StringArray>
                 </Property>
+                <Property name="selectionMode" type="int" value="0"/>
               </Properties>
             </Component>
           </SubComponents>

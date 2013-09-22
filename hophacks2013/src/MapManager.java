@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class MapManager implements Serializable {
 
     private HashMap<Sound, Action> database;
-    private static final float THRESHOLD = 0.5f;
+    private static final float THRESHOLD = 0.35f;
 
     public MapManager() {
         try {
@@ -68,5 +68,14 @@ public class MapManager implements Serializable {
             if (s.getFingerprint().equals(fingerprint)) return database.get(s);
         }
         return null;
+    }
+
+    public String[] getNames() {
+        String[] names = new String[database.size()];
+        int i = 0;
+        for (Sound s : database.keySet()) {
+            names[i++] = s.getName();
+        }
+        return names;
     }
 }

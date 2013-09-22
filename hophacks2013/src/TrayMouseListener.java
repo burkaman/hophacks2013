@@ -10,13 +10,19 @@ import javax.swing.JFrame;
 public class TrayMouseListener implements MouseListener {
 
     private JFrame frame;
+    private BackgroundMicrophone mic;
 
     public TrayMouseListener(JFrame frame) {
         this.frame = frame;
+        mic = new BackgroundMicrophone();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (frame.isVisible()) {
+            frame.setVisible(false);
+            mic.start();
+        }
         frame.setVisible(!frame.isVisible());
     }
 
@@ -39,5 +45,4 @@ public class TrayMouseListener implements MouseListener {
     public void mouseExited(MouseEvent e) {
         return;
     }
-    
 }
