@@ -11,13 +11,27 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class WebpageLogin implements Action, Serializable {
 
     //private String url;
+    private String site;
     private String username;
     private String password;
 
-    public WebpageLogin(String user, String pass) {
+    public WebpageLogin(String site, String user, String pass) {
         //this.url = url;
+        this.site = site;
         this.username = user;
         this.password = pass;
+    }
+
+    public void launch() {
+        if (site.equals("facebook")) {
+            facebookLaunch();
+        } else if (site.equals("piazza")) {
+            piazzaLaunch();
+        } else if (site.equals("hophacks")) {
+            hophacksLaunch();
+        } else {
+            return;
+        }
     }
 
     public void facebookLaunch() {
