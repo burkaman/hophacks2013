@@ -7,6 +7,7 @@ import java.awt.CardLayout;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Date;
 import javax.sound.sampled.AudioFormat;
@@ -37,6 +38,16 @@ public class HophacksGUI extends javax.swing.JFrame {
      * Creates new form HophacksGUI
      */
     public HophacksGUI() {
+        TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/hacklogo.png"));
+        trayIcon.setImageAutoSize(true);
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException ex) {
+        }
+        MouseListener listener = new TrayMouseListener(this);
+        trayIcon.addMouseListener(listener);
+
         x = new double[5];
         y = new double[5];
         manager = new MapManager();
@@ -646,12 +657,6 @@ public class HophacksGUI extends javax.swing.JFrame {
 //        frame.setSize(new Dimension(500,500));
 //        frame.setContentPane(plot);
 //        frame.setVisible(true);
-        TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("img/hacklogo.png").getScaledInstance(16, 16, 0));
-        SystemTray tray = SystemTray.getSystemTray();
-        try {
-            tray.add(trayIcon);
-        } catch (AWTException ex) {
-        }
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 System.out.println(info.getName());
