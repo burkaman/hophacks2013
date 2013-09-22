@@ -10,6 +10,9 @@ import java.awt.TrayIcon;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Date;
+import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Synthesizer;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -34,6 +37,10 @@ public class HophacksGUI extends javax.swing.JFrame {
     private MapManager manager;
     private byte[] fingerprint;
     private Action action;
+    private MidiChannel channel = null;
+    private Thread thread;
+    private boolean running;
+    private int note;
     /**
      * Creates new form HophacksGUI
      */
@@ -58,6 +65,15 @@ public class HophacksGUI extends javax.swing.JFrame {
         }
 
         initComponents();
+        try {
+            final Synthesizer metronome = MidiSystem.getSynthesizer();
+            metronome.open();
+            channel = metronome.getChannels()[9];
+            
+        } catch (Exception e) {
+            System.out.println("Failed to Start metronome");
+        }
+        note = 56;
     }
 
     /**
@@ -83,6 +99,11 @@ public class HophacksGUI extends javax.swing.JFrame {
         listenButton = new javax.swing.JButton();
         submitButton = new javax.swing.JButton();
         pickActionLabel = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jSlider2 = new javax.swing.JSlider();
+        label2 = new java.awt.Label();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox();
         testPanel = new javax.swing.JPanel();
         testLabel = new java.awt.Label();
         backButton2 = new javax.swing.JButton();
@@ -142,46 +163,40 @@ public class HophacksGUI extends javax.swing.JFrame {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(74, 74, 74)
                 .addComponent(mapSoundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(testMapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(72, Short.MAX_VALUE))
             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                    .addContainerGap(20, Short.MAX_VALUE)
+                    .addContainerGap(74, Short.MAX_VALUE)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(18, Short.MAX_VALUE)))
+                    .addContainerGap(72, Short.MAX_VALUE)))
             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                    .addContainerGap(271, Short.MAX_VALUE)
-                    .addComponent(testMapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(mainPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(shredButton, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addContainerGap(74, Short.MAX_VALUE)
+                    .addComponent(shredButton, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(72, 72, 72)))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
-                .addComponent(mapSoundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(121, 121, 121))
+                .addContainerGap(193, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mapSoundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(testMapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(148, 148, 148))
             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                    .addContainerGap(34, Short.MAX_VALUE)
+                    .addContainerGap(67, Short.MAX_VALUE)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(211, Short.MAX_VALUE)))
+                    .addContainerGap(243, Short.MAX_VALUE)))
             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                    .addContainerGap(155, Short.MAX_VALUE)
-                    .addComponent(testMapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(121, Short.MAX_VALUE)))
-            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                    .addContainerGap(245, Short.MAX_VALUE)
+                    .addContainerGap(277, Short.MAX_VALUE)
                     .addComponent(shredButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(19, Short.MAX_VALUE)))
+                    .addContainerGap(52, Short.MAX_VALUE)))
         );
 
         getContentPane().add(mainPanel, "main");
@@ -238,45 +253,105 @@ public class HophacksGUI extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("Start Metronome");
+        jToggleButton1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jToggleButton1StateChanged(evt);
+            }
+        });
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        jSlider2.setMajorTickSpacing(40);
+        jSlider2.setMaximum(360);
+        jSlider2.setMinimum(40);
+        jSlider2.setMinorTickSpacing(10);
+        jSlider2.setOrientation(javax.swing.JSlider.VERTICAL);
+        jSlider2.setPaintLabels(true);
+        jSlider2.setPaintTicks(true);
+        jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider2StateChanged(evt);
+            }
+        });
+
+        label2.setAlignment(java.awt.Label.RIGHT);
+        label2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label2.setText("50 BPM");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cowbell", "Silence", "High Wood Block", "Low Wood Block", "WILD CARD" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout recordPanelLayout = new javax.swing.GroupLayout(recordPanel);
         recordPanel.setLayout(recordPanelLayout);
         recordPanelLayout.setHorizontalGroup(
             recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(backButton)
-                        .addComponent(recordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(recordPanelLayout.createSequentialGroup()
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(recordPanelLayout.createSequentialGroup()
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
-                        .addComponent(recordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(listenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
-                        .addComponent(pickActionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
+                                    .addComponent(recordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(listenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
+                                    .addComponent(pickActionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(submitButton)))
+                            .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(recordPanelLayout.createSequentialGroup()
+                        .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(recordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         recordPanelLayout.setVerticalGroup(
             recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(recordPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(backButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(recordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                    .addComponent(recordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pickActionLabel))
-                .addContainerGap())
+                    .addComponent(jToggleButton1)
+                    .addComponent(backButton)
+                    .addComponent(jComboBox1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recordPanelLayout.createSequentialGroup()
+                        .addComponent(recordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(recordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pickActionLabel)))
+                    .addGroup(recordPanelLayout.createSequentialGroup()
+                        .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(78, 78, 78))
         );
 
         getContentPane().add(recordPanel, "mapSound");
@@ -309,7 +384,7 @@ public class HophacksGUI extends javax.swing.JFrame {
             .addGroup(testPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(testPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(testLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                    .addComponent(testLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
                     .addComponent(recordButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(testPanelLayout.createSequentialGroup()
                         .addComponent(backButton2)
@@ -325,7 +400,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(testLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(recordButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                .addComponent(recordButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(testResult, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -362,7 +437,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(programTabLayout.createSequentialGroup()
-                        .addGap(0, 364, Short.MAX_VALUE)
+                        .addGap(0, 478, Short.MAX_VALUE)
                         .addComponent(tab1Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(programTabLayout.createSequentialGroup()
                         .addComponent(tab1Label1)
@@ -377,7 +452,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addGroup(programTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tab1Label1)
                     .addComponent(tab1Text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addComponent(tab1Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -405,7 +480,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tab2Text1))
                     .addGroup(websiteTabLayout.createSequentialGroup()
-                        .addGap(143, 376, Short.MAX_VALUE)
+                        .addGap(143, 488, Short.MAX_VALUE)
                         .addComponent(tab2Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -416,7 +491,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addGroup(websiteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tab2Label1)
                     .addComponent(tab2Text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addComponent(tab2Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -446,7 +521,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                     .addGroup(websiteLogonLayout.createSequentialGroup()
                         .addComponent(tab3Label1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tab3Text1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                        .addComponent(tab3Text1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
                     .addGroup(websiteLogonLayout.createSequentialGroup()
                         .addComponent(tab3Label3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -456,7 +531,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tab3Text2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, websiteLogonLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 478, Short.MAX_VALUE)
                         .addComponent(tab3Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -475,7 +550,7 @@ public class HophacksGUI extends javax.swing.JFrame {
                 .addGroup(websiteLogonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tab3Label3)
                     .addComponent(tab3Text3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addComponent(tab3Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -520,66 +595,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         cl.show(this.getContentPane(), "mapSound");
     }//GEN-LAST:event_mapSoundButtonActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        resetButtonActionPerformed(evt);
-        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
-        cl.show(this.getContentPane(), "main");
-    }//GEN-LAST:event_backButtonActionPerformed
-
-    private void recordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordButtonActionPerformed
-        MicrophoneRecorder mr = new MicrophoneRecorder();
-        Wave wave = mr.record();
-        this.listenButton.setEnabled(true);
-        this.resetButton.setEnabled(true);
-        this.submitButton.setEnabled(true);
-        this.recordButton.setEnabled(false);
-        WaveFileManager fman = new WaveFileManager(wave);
-        fman.saveWaveAsFile("temp.wav");
-        FingerprintManager printMan = new FingerprintManager();
-        fingerprint = printMan.extractFingerprint(wave);
-    }//GEN-LAST:event_recordButtonActionPerformed
-
-    private void listenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenButtonActionPerformed
-        try {
-            File file = new File("temp.wav");
-            AudioInputStream stream;
-            AudioFormat format;
-            DataLine.Info info;
-            Clip clip;
-
-            stream = AudioSystem.getAudioInputStream(file);
-            format = stream.getFormat();
-            info = new DataLine.Info(Clip.class, format);
-            clip = (Clip) AudioSystem.getLine(info);
-            clip.open(stream);
-            clip.start();
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_listenButtonActionPerformed
-
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        File file = new File("temp.wav");
-        file.delete();
-        fingerprint = null;
-        this.listenButton.setEnabled(false);
-        this.submitButton.setEnabled(false);
-        this.resetButton.setEnabled(false);
-        this.recordButton.setEnabled(true);
-    }//GEN-LAST:event_resetButtonActionPerformed
-
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if (action == null) {
-            JOptionPane.showMessageDialog(this, "You must select an action");
-            return;
-        }
-        String name = JOptionPane.showInputDialog(this, "What is the name of this sound?");
-        Sound sound = new Sound(fingerprint, name, new Date());
-        manager.add(sound, action);
-        this.pickActionLabel.setText("Pick an action");
-        action = null;
-        backButtonActionPerformed(evt);
-    }//GEN-LAST:event_submitButtonActionPerformed
-
     private void backButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButton2ActionPerformed
         this.testResult.setText("");
         CardLayout cl = (CardLayout) this.getContentPane().getLayout();
@@ -610,11 +625,6 @@ public class HophacksGUI extends javax.swing.JFrame {
         cl.show(this.getContentPane(), "mapSound");
     }//GEN-LAST:event_backButton3ActionPerformed
 
-    private void pickActionLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pickActionLabelMouseClicked
-        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
-        cl.show(this.getContentPane(), "action");
-    }//GEN-LAST:event_pickActionLabelMouseClicked
-
     private void tab1SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tab1SubmitActionPerformed
         String path = this.tab1Text1.getText();
         action = new Program(path);
@@ -637,6 +647,141 @@ public class HophacksGUI extends javax.swing.JFrame {
         this.pickActionLabel.setText("Webpage login: " + site);
         backButton3ActionPerformed(evt);
     }//GEN-LAST:event_tab3SubmitActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if(jToggleButton1.getText().equals("Start Metronome" ) ) {
+            jToggleButton1.setText("Stop Metronome");
+            running = true;
+
+            thread = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    final long start = System.currentTimeMillis();
+                    System.out.println("In thread");
+                    int i = 0;
+                    while(running) {
+                        channel.noteOn(note,127);
+                        i++;
+                        System.out.println("In while loop " +i);
+                        jRadioButton1.setSelected(true);
+                        final long currentTimeBeforeSleep = System.currentTimeMillis();
+                        final long currentLag = (currentTimeBeforeSleep - start) % (60000/(jSlider2.getValue()));
+                        final long sleepTime = (60000/(jSlider2.getValue()));
+                        final long expectedWakeTime = currentTimeBeforeSleep + sleepTime;
+                        System.out.println(sleepTime);
+
+                        try {
+                            Thread.sleep(sleepTime/2);
+                            jRadioButton1.setSelected(false);
+                            Thread.sleep(sleepTime/2);
+
+                        } catch (InterruptedException ex) {
+
+                        }
+                        channel.noteOff(0);
+                    }
+
+                }
+            },"Metronome");
+            thread.setPriority(Thread.MAX_PRIORITY);
+            thread.start();
+
+        } else {
+            jToggleButton1.setText("Start Metronome");
+            running = false;
+
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButton1StateChanged
+        // TODO add your handling code here:
+        //        jToggleButton1.setText("Stop Metronome");
+    }//GEN-LAST:event_jToggleButton1StateChanged
+
+    private void pickActionLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pickActionLabelMouseClicked
+        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
+        cl.show(this.getContentPane(), "action");
+    }//GEN-LAST:event_pickActionLabelMouseClicked
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        if (action == null) {
+            JOptionPane.showMessageDialog(this, "You must select an action");
+            return;
+        }
+        String name = JOptionPane.showInputDialog(this, "What is the name of this sound?");
+        Sound sound = new Sound(fingerprint, name, new Date());
+        manager.add(sound, action);
+        this.pickActionLabel.setText("Pick an action");
+        action = null;
+        backButtonActionPerformed(evt);
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void listenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenButtonActionPerformed
+        try {
+            File file = new File("temp.wav");
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(file);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_listenButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        resetButtonActionPerformed(evt);
+        CardLayout cl = (CardLayout) this.getContentPane().getLayout();
+        cl.show(this.getContentPane(), "main");
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        File file = new File("temp.wav");
+        file.delete();
+        fingerprint = null;
+        this.listenButton.setEnabled(false);
+        this.submitButton.setEnabled(false);
+        this.resetButton.setEnabled(false);
+        this.recordButton.setEnabled(true);
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void recordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordButtonActionPerformed
+        MicrophoneRecorder mr = new MicrophoneRecorder();
+        Wave wave = mr.record();
+        this.listenButton.setEnabled(true);
+        this.resetButton.setEnabled(true);
+        this.submitButton.setEnabled(true);
+        this.recordButton.setEnabled(false);
+        WaveFileManager fman = new WaveFileManager(wave);
+        fman.saveWaveAsFile("temp.wav");
+        FingerprintManager printMan = new FingerprintManager();
+        fingerprint = printMan.extractFingerprint(wave);
+    }//GEN-LAST:event_recordButtonActionPerformed
+
+    private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSlider2StateChanged
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        if(jComboBox1.getSelectedIndex()==0) {
+            note = 56;
+        } else if(jComboBox1.getSelectedIndex()==1) {
+            note = 112;
+        } else if(jComboBox1.getSelectedIndex()==2) {
+            note = 76;
+        } else if(jComboBox1.getSelectedIndex()==3) {
+            note = 77;
+        } else {
+            note = (int)(Math.random()*40)+40;
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -695,8 +840,13 @@ public class HophacksGUI extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton backButton2;
     private javax.swing.JButton backButton3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JSlider jSlider2;
+    private javax.swing.JToggleButton jToggleButton1;
     private java.awt.Label label1;
+    private java.awt.Label label2;
     private javax.swing.JButton listenButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton mapSoundButton;
