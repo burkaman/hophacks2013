@@ -1,5 +1,8 @@
 
 import java.text.NumberFormat;
+import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Synthesizer;
 import javax.swing.text.NumberFormatter;
 
 /*
@@ -15,9 +18,21 @@ public class TestMetronome extends javax.swing.JFrame {
 
     /**
      * Creates new form TestMetronome
+     * 
      */
+    private MidiChannel channel = null;
+    private Thread thread;
+    private boolean running;
     public TestMetronome() {
         initComponents();
+        try {
+            final Synthesizer metronome = MidiSystem.getSynthesizer();
+            metronome.open();
+            channel = metronome.getChannels()[9];
+            
+        } catch (Exception e) {
+            System.out.println("Failed to Start metronome");
+        }
     }
 
     /**
@@ -33,9 +48,9 @@ public class TestMetronome extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jComboBox1 = new javax.swing.JComboBox();
         jSlider1 = new javax.swing.JSlider();
         label1 = new java.awt.Label();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -56,8 +71,6 @@ public class TestMetronome extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jSlider1.setMajorTickSpacing(40);
         jSlider1.setMaximum(360);
@@ -83,9 +96,11 @@ public class TestMetronome extends javax.swing.JFrame {
                 .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton1)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -101,16 +116,16 @@ public class TestMetronome extends javax.swing.JFrame {
                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jToggleButton1)
-                        .addGap(5, 5, 5)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton1))))
+                .addGap(31, 31, 31))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 50, Short.MAX_VALUE)
+                    .addGap(0, 57, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 50, Short.MAX_VALUE)))
+                    .addGap(0, 57, Short.MAX_VALUE)))
         );
 
         pack();
@@ -129,10 +144,48 @@ public class TestMetronome extends javax.swing.JFrame {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         if(jToggleButton1.getText().equals("Start Metronome" ) ) {
         jToggleButton1.setText("Stop Metronome");
+        running = true;
+        
+        thread = new Thread(new Runnable() {
+            
+
+            @Override
+            public void run() {
+                final long start = System.currentTimeMillis();
+                System.out.println("In thread");
+                int i = 0;
+                while(running) {
+                    channel.noteOn(56,127);
+                    i++;
+                    System.out.println("In while loop " +i);
+                    jRadioButton1.setSelected(true);
+                    final long currentTimeBeforeSleep = System.currentTimeMillis();
+	            final long currentLag = (currentTimeBeforeSleep - start) % (60000/(jSlider1.getValue()));
+	            final long sleepTime = (60000/(jSlider1.getValue()));
+	            final long expectedWakeTime = currentTimeBeforeSleep + sleepTime;
+                    System.out.println(sleepTime);
+
+                    try {
+	                        Thread.sleep(sleepTime/2);
+                                jRadioButton1.setSelected(false);
+	                        Thread.sleep(sleepTime/2);
+                                
+	                    } catch (InterruptedException ex) {
+	                        
+	                    }
+                    channel.noteOff(0);
+                }
+                
+            }
+        },"Metronome");
+        thread.setPriority(Thread.MAX_PRIORITY);
+        thread.start();
+        
         } else {
             jToggleButton1.setText("Start Metronome");
+            running = false;
+            
         }
-        
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
@@ -169,9 +222,11 @@ public class TestMetronome extends javax.swing.JFrame {
             }
         });
     }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
